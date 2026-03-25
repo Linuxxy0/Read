@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>静读 · 阅读页</title>
+  <meta name="description" content="静读，一个适合 GitHub Pages 部署的现代阅读网站演示项目，支持全站搜索、作品内搜索、动态标签和日夜主题切换。" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+<body data-page="book">
+  <div class="page-shell">
+    <header class="header">
+      <div class="container header-inner">
+        <a class="brand" href="./index.html" aria-label="静读首页">
+          <div class="brand-mark">静</div>
+          <div class="brand-copy">
+            <small>Read in Quiet</small>
+            <strong>静读</strong>
+          </div>
+        </a>
+        <nav class="nav" aria-label="主导航">
+          <a href="./index.html" data-nav="home">首页</a>
+          <a href="./library.html" data-nav="library">著作</a>
+          <a href="./authors.html" data-nav="authors">作者</a>
+          <a href="./categories.html" data-nav="categories">分类</a>
+          <a href="./about.html" data-nav="about">关于</a>
+        </nav>
+        <div class="header-actions">
+          <a class="inline-button" href="./search.html">全站搜索</a>
+          <button class="theme-toggle" type="button" data-theme-toggle>
+            <span>◐</span>
+            <span data-theme-label>切换夜间</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    
+<main class="section">
+  <div class="container reading-layout">
+    <aside class="sticky-panel sidebar-card">
+      <h3 id="toc">章节目录</h3>
+      <div class="toc" data-book-toc></div>
+    </aside>
+
+    <section class="reading-main">
+      <article class="book-hero card">
+        <div class="tag-list">
+          <span class="meta-pill" data-book-category></span>
+          <span class="meta-pill" data-book-words></span>
+          <span class="meta-pill" data-book-chapter-count></span>
+        </div>
+        <h1 data-book-title></h1>
+        <div class="page-intro" style="margin-top:12px;" data-book-author></div>
+        <p class="page-intro" data-book-summary></p>
+        <p class="section-copy" data-book-description></p>
+        <div class="tag-list" data-book-tags></div>
+      </article>
+      <section data-book-chapters></section>
+    </section>
+
+    <aside class="sticky-panel sidebar-stack">
+      <section class="sidebar-card">
+        <h3>作品内搜索</h3>
+        <form class="search-box" data-book-search-form>
+          <input type="search" placeholder="搜索当前著作中的关键词……" data-book-search-input />
+          <button class="search-submit primary-button" type="submit">检索</button>
+        </form>
+        <div class="reading-actions" style="margin-top:12px;">
+          <button class="inline-button" type="button" data-book-search-prev>上一个</button>
+          <button class="inline-button" type="button" data-book-search-next>下一个</button>
+        </div>
+        <p class="muted" style="margin-top:12px;" data-book-search-count></p>
+        <div class="book-search-results" data-book-search-results></div>
+      </section>
+      <section class="sidebar-card">
+        <h3>阅读设置</h3>
+        <div class="reading-actions">
+          <button class="inline-button" type="button" data-font-minus>A-</button>
+          <button class="inline-button" type="button" data-font-plus>A+</button>
+          <button class="inline-button" type="button" data-theme-toggle><span data-theme-label>切换夜间</span></button>
+        </div>
+        <p class="section-copy" style="margin-top:12px;">支持白天 / 夜间主题切换与字号调整，适合长时间阅读。</p>
+      </section>
+    </aside>
+  </div>
+</main>
+
+  </div>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>静读 · GitHub Pages 阅读项目</strong>
+        <div class="muted" style="margin-top:8px;">支持首页、书架页、作者页、分类页、全站搜索、作品内搜索，以及白天 / 夜间主题切换。</div>
+      </div>
+      <div class="footer-links">
+        <a href="./index.html">首页</a>
+        <a href="./library.html">著作</a>
+        <a href="./search.html">搜索</a>
+        <a href="./about.html">关于</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./assets/js/books-data.js"></script>
+  <script src="./assets/js/site.js"></script>
+  <script src="./assets/js/book.js"></script>
+</body>
+</html>

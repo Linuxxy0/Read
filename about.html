@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>静读 · 项目说明</title>
+  <meta name="description" content="静读，一个适合 GitHub Pages 部署的现代阅读网站演示项目，支持全站搜索、作品内搜索、动态标签和日夜主题切换。" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+<body data-page="about">
+  <div class="page-shell">
+    <header class="header">
+      <div class="container header-inner">
+        <a class="brand" href="./index.html" aria-label="静读首页">
+          <div class="brand-mark">静</div>
+          <div class="brand-copy">
+            <small>Read in Quiet</small>
+            <strong>静读</strong>
+          </div>
+        </a>
+        <nav class="nav" aria-label="主导航">
+          <a href="./index.html" data-nav="home">首页</a>
+          <a href="./library.html" data-nav="library">著作</a>
+          <a href="./authors.html" data-nav="authors">作者</a>
+          <a href="./categories.html" data-nav="categories">分类</a>
+          <a href="./about.html" data-nav="about">关于</a>
+        </nav>
+        <div class="header-actions">
+          <a class="inline-button" href="./search.html">全站搜索</a>
+          <button class="theme-toggle" type="button" data-theme-toggle>
+            <span>◐</span>
+            <span data-theme-label>切换夜间</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    
+<main class="section">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div class="section-kicker">About</div>
+        <h1 class="section-title">项目说明</h1>
+        <p class="page-intro">这是一个为 GitHub Pages 设计的静态阅读站项目：无需后端、开箱即用、直接上传仓库即可部署。</p>
+      </div>
+    </div>
+
+    <section class="metrics-grid stats-grid">
+      <div class="stat-card"><div class="stat-value" data-about-stat="works">--</div><div class="stat-label">收录作品</div></div>
+      <div class="stat-card"><div class="stat-value" data-about-stat="words">--</div><div class="stat-label">收录字数</div></div>
+      <div class="stat-card"><div class="stat-value" data-about-stat="chapters">--</div><div class="stat-label">章节节选</div></div>
+      <div class="stat-card"><div class="stat-value" data-about-stat="tags">--</div><div class="stat-label">动态标签</div></div>
+    </section>
+
+    <section class="about-grid grid-cards" style="margin-top:24px;">
+      <article class="info-card">
+        <h3>已完成功能</h3>
+        <p class="about-copy">首页独立展示、书架页单独加载、全站搜索、作品内搜索、动态标签统计、动态收录数、主题切换、作者页、分类页、阅读页字号调节，均已实现。</p>
+      </article>
+      <article class="info-card">
+        <h3>数据结构</h3>
+        <p class="about-copy">项目通过 <code>assets/data/books.json</code> 提供作品、作者、标签、字数与节选内容。你后续只要更新 JSON，页面会自动联动。</p>
+      </article>
+      <article class="info-card">
+        <h3>部署方式</h3>
+        <p class="about-copy">直接把整个项目目录推送到 GitHub 仓库，在 Settings → Pages 中选择 Deploy from a branch，使用根目录发布即可。</p>
+      </article>
+      <article class="info-card">
+        <h3>可继续扩展</h3>
+        <p class="about-copy">后续可以加入完整正文、收藏、目录折叠、阅读进度、拼音检索或静态生成脚本。本次交付已保证核心功能可直接使用。</p>
+      </article>
+    </section>
+  </div>
+</main>
+
+  </div>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>静读 · GitHub Pages 阅读项目</strong>
+        <div class="muted" style="margin-top:8px;">支持首页、书架页、作者页、分类页、全站搜索、作品内搜索，以及白天 / 夜间主题切换。</div>
+      </div>
+      <div class="footer-links">
+        <a href="./index.html">首页</a>
+        <a href="./library.html">著作</a>
+        <a href="./search.html">搜索</a>
+        <a href="./about.html">关于</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./assets/js/books-data.js"></script>
+  <script src="./assets/js/site.js"></script>
+  <script src="./assets/js/about.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>静读 · 首页</title>
+  <meta name="description" content="静读，一个适合 GitHub Pages 部署的现代阅读网站演示项目，支持全站搜索、作品内搜索、动态标签和日夜主题切换。" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+<body data-page="home">
+  <div class="page-shell">
+    <header class="header">
+      <div class="container header-inner">
+        <a class="brand" href="./index.html" aria-label="静读首页">
+          <div class="brand-mark">静</div>
+          <div class="brand-copy">
+            <small>Read in Quiet</small>
+            <strong>静读</strong>
+          </div>
+        </a>
+        <nav class="nav" aria-label="主导航">
+          <a href="./index.html" data-nav="home">首页</a>
+          <a href="./library.html" data-nav="library">著作</a>
+          <a href="./authors.html" data-nav="authors">作者</a>
+          <a href="./categories.html" data-nav="categories">分类</a>
+          <a href="./about.html" data-nav="about">关于</a>
+        </nav>
+        <div class="header-actions">
+          <a class="inline-button" href="./search.html">全站搜索</a>
+          <button class="theme-toggle" type="button" data-theme-toggle>
+            <span>◐</span>
+            <span data-theme-label>切换夜间</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    
+<main>
+  <section class="hero">
+    <div class="container hero-grid">
+      <div>
+        <div class="hero-badge">现代美学 · 可检索阅读 · GitHub 部署友好</div>
+        <h1>像一座安静的 <em>数字藏书馆</em> 一样阅读。</h1>
+        <p class="lead">首页只做首页该做的事：建立气质、承接搜索、引导进入书架与阅读页。著作页则独立成页，让读者在另一层界面中系统找书。</p>
+        <div class="hero-actions">
+          <a class="inline-button primary-button" href="./library.html">进入著作书架</a>
+          <a class="inline-button" href="./search.html">打开全站搜索</a>
+        </div>
+        <div class="stats-grid">
+          <div class="stat-card"><div class="stat-value" data-stat="works">--</div><div class="stat-label">收录作品</div></div>
+          <div class="stat-card"><div class="stat-value" data-stat="words">--</div><div class="stat-label">收录字数</div></div>
+          <div class="stat-card"><div class="stat-value" data-stat="chapters">--</div><div class="stat-label">章节片段</div></div>
+          <div class="stat-card"><div class="stat-value" data-stat="tags">--</div><div class="stat-label">动态标签</div></div>
+        </div>
+      </div>
+      <div class="hero-panel glass-panel search-shell">
+        <form class="search-box" data-home-search-form>
+          <label class="sr-only" for="home-search">搜索</label>
+          <input id="home-search" data-home-search-input type="search" placeholder="搜索书名、作者、章节、正文关键词……" autocomplete="off" />
+          <button class="search-submit primary-button" type="submit">搜索</button>
+        </form>
+        <div class="search-preview hidden" data-search-preview></div>
+        <div style="margin-top:18px;" class="muted">搜索会直接联动到全站结果页；点进著作后，还可继续在当前书内检索。</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Top tags</div>
+          <h2 class="section-title">动态标签入口</h2>
+          <p class="section-copy">标签、分类与收录数量都来自数据文件，后续只要替换 JSON 内容，页面会自动更新。</p>
+        </div>
+        <a class="inline-button" href="./categories.html">查看全部分类</a>
+      </div>
+      <div class="tag-list" data-tags></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container featured-grid">
+      <div class="featured-main card" data-featured-main></div>
+      <div class="featured-side card" data-featured-side></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div>
+          <div class="section-kicker">Library preview</div>
+          <h2 class="section-title">首页继续引导，书架页另开一层</h2>
+          <p class="section-copy">下面只展示部分作品预览；真正的筛选、排序、双视图切换和批量浏览，全部放在独立的“著作”页里。</p>
+        </div>
+        <a class="inline-button primary-button" href="./library.html">进入著作页</a>
+      </div>
+      <div class="library-results" data-latest-books></div>
+    </div>
+  </section>
+</main>
+
+  </div>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>静读 · GitHub Pages 阅读项目</strong>
+        <div class="muted" style="margin-top:8px;">支持首页、书架页、作者页、分类页、全站搜索、作品内搜索，以及白天 / 夜间主题切换。</div>
+      </div>
+      <div class="footer-links">
+        <a href="./index.html">首页</a>
+        <a href="./library.html">著作</a>
+        <a href="./search.html">搜索</a>
+        <a href="./about.html">关于</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./assets/js/books-data.js"></script>
+  <script src="./assets/js/site.js"></script>
+  <script src="./assets/js/index.js"></script>
+</body>
+</html>

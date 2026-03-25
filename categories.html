@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>静读 · 分类与标签</title>
+  <meta name="description" content="静读，一个适合 GitHub Pages 部署的现代阅读网站演示项目，支持全站搜索、作品内搜索、动态标签和日夜主题切换。" />
+  <link rel="stylesheet" href="./assets/css/styles.css" />
+</head>
+<body data-page="categories">
+  <div class="page-shell">
+    <header class="header">
+      <div class="container header-inner">
+        <a class="brand" href="./index.html" aria-label="静读首页">
+          <div class="brand-mark">静</div>
+          <div class="brand-copy">
+            <small>Read in Quiet</small>
+            <strong>静读</strong>
+          </div>
+        </a>
+        <nav class="nav" aria-label="主导航">
+          <a href="./index.html" data-nav="home">首页</a>
+          <a href="./library.html" data-nav="library">著作</a>
+          <a href="./authors.html" data-nav="authors">作者</a>
+          <a href="./categories.html" data-nav="categories">分类</a>
+          <a href="./about.html" data-nav="about">关于</a>
+        </nav>
+        <div class="header-actions">
+          <a class="inline-button" href="./search.html">全站搜索</a>
+          <button class="theme-toggle" type="button" data-theme-toggle>
+            <span>◐</span>
+            <span data-theme-label>切换夜间</span>
+          </button>
+        </div>
+      </div>
+    </header>
+    
+<main class="section">
+  <div class="container">
+    <div class="section-header">
+      <div>
+        <div class="section-kicker">Categories & tags</div>
+        <h1 class="section-title">分类与标签</h1>
+        <p class="page-intro">分类与标签都由书籍数据动态聚合生成，新增作品后会自动更新对应数量。</p>
+      </div>
+      <a class="inline-button" href="./library.html">打开著作筛选</a>
+    </div>
+    <section>
+      <h2 class="section-title" style="font-size:1.6rem; margin-bottom:14px;">分类</h2>
+      <div class="category-grid grid-cards" data-category-grid></div>
+    </section>
+    <section style="margin-top:30px;">
+      <h2 class="section-title" style="font-size:1.6rem; margin-bottom:14px;">标签</h2>
+      <div class="tags-grid grid-cards" data-tags-grid></div>
+    </section>
+  </div>
+</main>
+
+  </div>
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>
+        <strong>静读 · GitHub Pages 阅读项目</strong>
+        <div class="muted" style="margin-top:8px;">支持首页、书架页、作者页、分类页、全站搜索、作品内搜索，以及白天 / 夜间主题切换。</div>
+      </div>
+      <div class="footer-links">
+        <a href="./index.html">首页</a>
+        <a href="./library.html">著作</a>
+        <a href="./search.html">搜索</a>
+        <a href="./about.html">关于</a>
+      </div>
+    </div>
+  </footer>
+  <script src="./assets/js/books-data.js"></script>
+  <script src="./assets/js/site.js"></script>
+  <script src="./assets/js/categories.js"></script>
+</body>
+</html>
