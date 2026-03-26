@@ -34,66 +34,89 @@
         </div>
       </div>
     </header>
-    
-<main class="section">
-  <div class="container">
-    <div class="section-header">
-      <div>
-        <div class="section-kicker">Library</div>
-        <h1 class="section-title">著作 / 书架页</h1>
-        <p class="page-intro" data-library-summary></p>
-      </div>
-      <div class="view-toggle">
-        <button type="button" data-view="grid">网格视图</button>
-        <button type="button" data-view="list">列表视图</button>
-      </div>
-    </div>
 
-    <div class="tag-list" data-category-chips></div>
-
-    <div class="library-layout" style="margin-top:20px;">
-      <aside class="sidebar-stack">
-        <section class="sidebar-card">
-          <h3>搜索与筛选</h3>
-          <div class="control-group">
-            <input class="filter-select" type="search" placeholder="搜索书名、作者、标签……" data-filter-search />
-            <select class="filter-select" data-filter-category></select>
-            <select class="filter-select" data-filter-author></select>
-            <select class="filter-select" data-filter-sort>
-              <option value="title">按书名排序</option>
-              <option value="words">按收录字数排序</option>
-              <option value="author">按作者排序</option>
-              <option value="chapters">按节选数量排序</option>
-            </select>
-            <label class="meta-pill" style="justify-content:flex-start;">
-              <input type="checkbox" data-filter-featured />
-              只看精选著作
-            </label>
-            <button class="inline-button" type="button" data-clear-filters>清空筛选</button>
+    <main class="section library-page">
+      <div class="container">
+        <div class="section-header library-header">
+          <div class="library-heading">
+            <div class="section-kicker">Library</div>
+            <h1 class="section-title">著作 / 书架页</h1>
+            <p class="page-intro" data-library-summary></p>
           </div>
-        </section>
-        <section class="sidebar-card">
-          <h3>标签筛选</h3>
-          <div class="filter-chip-wrap" data-tag-chips></div>
-        </section>
-      </aside>
-      <section class="library-results-wrapper" data-library-container>
-        <div class="section-actions" style="justify-content:space-between; margin-bottom:16px;">
-          <div class="muted" data-library-count></div>
-          <a class="inline-button" href="./categories.html">浏览分类与标签</a>
-        </div>
-        <div class="library-results" data-library-results></div>
-      </section>
-    </div>
-  </div>
-</main>
 
+          <div class="library-command" data-library-command>
+            <div class="library-searchbar">
+              <span class="library-search-icon" aria-hidden="true">⌕</span>
+              <input type="search" placeholder="搜索书名、作者、标签、简介……" data-filter-search />
+              <button class="select-chip" type="button" data-filter-panel-toggle aria-expanded="false">详细筛选</button>
+              <button class="inline-button" type="button" data-clear-filters>清空</button>
+            </div>
+
+            <div class="dropdown-panel library-filter-panel hidden" data-filter-panel>
+              <div class="library-filter-grid">
+                <label class="library-filter-item">
+                  <span>分类</span>
+                  <select class="filter-select" data-filter-category></select>
+                </label>
+                <label class="library-filter-item">
+                  <span>作者</span>
+                  <select class="filter-select" data-filter-author></select>
+                </label>
+                <label class="library-filter-item">
+                  <span>排序</span>
+                  <select class="filter-select" data-filter-sort>
+                    <option value="title">按书名排序</option>
+                    <option value="words">按收录字数排序</option>
+                    <option value="author">按作者排序</option>
+                    <option value="chapters">按节选数量排序</option>
+                  </select>
+                </label>
+                <div class="library-filter-item library-checkbox-item">
+                  <span>内容范围</span>
+                  <label class="meta-pill library-featured-pill">
+                    <input type="checkbox" data-filter-featured />
+                    只看精选著作
+                  </label>
+                </div>
+              </div>
+
+              <div class="library-toolbar-row">
+                <div>
+                  <div class="library-filter-label">标签筛选</div>
+                  <div class="filter-chip-wrap" data-tag-chips></div>
+                </div>
+              </div>
+
+              <div class="library-toolbar-row library-toolbar-bottom">
+                <div>
+                  <div class="library-filter-label">快速分类</div>
+                  <div class="tag-list" data-category-chips></div>
+                </div>
+                <div class="view-toggle library-view-toggle">
+                  <button type="button" data-view="grid">网格视图</button>
+                  <button type="button" data-view="list">列表视图</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <section class="library-results-wrapper" data-library-container>
+          <div class="section-actions library-results-head">
+            <div class="muted" data-library-count></div>
+            <a class="inline-button" href="./categories.html">浏览分类与标签</a>
+          </div>
+          <div class="library-results" data-library-results></div>
+        </section>
+      </div>
+    </main>
   </div>
+
   <footer class="footer">
     <div class="container footer-inner">
       <div>
         <strong>静读 · GitHub Pages 阅读项目</strong>
-        <div class="muted" style="margin-top:8px;">支持首页、书架页、作者页、分类页、全站搜索、作品内搜索，以及白天 / 夜间主题切换。</div>
+        <div class="muted footer-note">支持首页、书架页、作者页、分类页、全站搜索、作品内搜索，以及白天 / 夜间主题切换。</div>
       </div>
       <div class="footer-links">
         <a href="./index.html">首页</a>
