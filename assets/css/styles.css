@@ -25,6 +25,11 @@
   --radius-sm: 14px;
   --header-height: 78px;
   --font-size-scale: 1;
+  --reader-font-family: "Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif;
+  --reader-font-size: 18px;
+  --reader-line-height: 2;
+  --reader-paragraph-gap: 1.1em;
+  --reader-side-gap: 44px;
 }
 
 :root[data-theme="dark"] {
@@ -533,26 +538,39 @@ textarea::placeholder {
   min-width: 0;
 }
 .book-hero {
-  padding: 28px;
+  padding: 28px var(--reader-side-gap);
   margin-bottom: 20px;
+}
+.book-hero,
+.chapter-card {
+  font-family: var(--reader-font-family);
 }
 .book-hero h1 {
   margin: 0;
   font-size: clamp(2.2rem, 4vw, 3.4rem);
   letter-spacing: -0.04em;
 }
+.book-hero .page-intro,
+.book-hero .section-copy {
+  font-size: calc(var(--reader-font-size) * 0.95);
+  line-height: var(--reader-line-height);
+}
+.chapter-card {
+  padding: 28px var(--reader-side-gap);
+}
 .chapter-card + .chapter-card {
   margin-top: 16px;
 }
 .chapter-title {
   margin: 0 0 16px;
-  font-size: 1.38rem;
+  font-size: calc(var(--reader-font-size) * 1.18);
+  line-height: 1.4;
   letter-spacing: -0.02em;
 }
 .chapter-content p {
-  margin: 0 0 1.1em;
-  font-size: calc(1.04rem * var(--font-size-scale));
-  line-height: calc(2 * var(--font-size-scale));
+  margin: 0 0 var(--reader-paragraph-gap);
+  font-size: var(--reader-font-size);
+  line-height: var(--reader-line-height);
 }
 .chapter-content p:last-child {
   margin-bottom: 0;
@@ -591,6 +609,44 @@ textarea::placeholder {
   text-align: left;
   width: 100%;
   color: inherit;
+}
+.reader-settings {
+  display: grid;
+  gap: 14px;
+  margin-top: 10px;
+}
+.reader-control {
+  display: grid;
+  gap: 8px;
+}
+.reader-control-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.94rem;
+  color: var(--text-soft);
+}
+.reader-control-head strong {
+  color: var(--text);
+  font-weight: 600;
+}
+.reader-select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 14px;
+  border-radius: 16px;
+  border: 1px solid var(--border);
+  background: var(--bg-strong);
+  color: var(--text);
+  outline: 0;
+}
+.reader-range {
+  width: 100%;
+  accent-color: var(--accent);
+}
+.reading-panel-copy {
+  margin-top: 14px;
 }
 mark {
   background: var(--highlight);

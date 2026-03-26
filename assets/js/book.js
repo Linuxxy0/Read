@@ -11,6 +11,30 @@ const {
   searchWithinBook,
 } = window.ReadQuiet;
 
+const READER_SETTINGS_KEY = 'read-quiet-reader-settings';
+const READER_DEFAULTS = {
+  fontFamily: 'serif',
+  fontSize: 18,
+  lineHeight: 2,
+  paragraphGap: 1.1,
+  sideGap: 44,
+};
+
+const READER_FONT_MAP = {
+  serif: {
+    label: '宋体阅读',
+    family: '"Noto Serif SC", "Source Han Serif SC", "Songti SC", "STSong", "SimSun", serif',
+  },
+  sans: {
+    label: '无衬线',
+    family: '"PingFang SC", "Noto Sans SC", "Microsoft YaHei", system-ui, -apple-system, BlinkMacSystemFont, sans-serif',
+  },
+  kai: {
+    label: '楷体风格',
+    family: '"Kaiti SC", "STKaiti", "KaiTi", serif',
+  },
+};
+
 function renderBookContent(book, query = '') {
   const chaptersEl = document.querySelector('[data-book-chapters]');
   if (!chaptersEl) return;
@@ -24,12 +48,111 @@ function renderBookContent(book, query = '') {
   `).join('');
 }
 
+function loadReaderSettings() {
+  try {
+    const raw = localStorage.getItem(READER_SETTINGS_KEY);
+    if (!raw) return { ...READER_DEFAULTS };
+    const parsed = JSON.parse(raw);
+    return {
+      ...READER_DEFAULTS,
+      ...parsed,
+    };
+  } catch (error) {
+    return { ...READER_DEFAULTS };
+  }
+}
+
+function saveReaderSettings(settings) {
+  localStorage.setItem(READER_SETTINGS_KEY, JSON.stringify(settings));
+}
+
+function applyReaderSettings(settings) {
+  const root = document.documentElement;
+  const font = READER_FONT_MAP[settings.fontFamily] || READER_FONT_MAP.serif;
+  root.style.setProperty('--reader-font-family', font.family);
+  root.style.setProperty('--reader-font-size', `${settings.fontSize}px`);
+  root.style.setProperty('--reader-line-height', String(settings.lineHeight));
+  root.style.setProperty('--reader-paragraph-gap', `${settings.paragraphGap}em`);
+  root.style.setProperty('--reader-side-gap', `${settings.sideGap}px`);
+}
+
+function bindReaderControls() {
+  const controls = {
+    fontFamily: document.querySelector('[data-reader-font-family]'),
+    fontSize: document.querySelector('[data-reader-font-size]'),
+    lineHeight: document.querySelector('[data-reader-line-height]'),
+    paragraphGap: document.querySelector('[data-reader-paragraph-gap]'),
+    sideGap: document.querySelector('[data-reader-side-gap]'),
+    reset: document.querySelector('[data-reader-reset]'),
+    fontFamilyLabel: document.querySelector('[data-reader-font-family-label]'),
+    fontSizeValue: document.querySelector('[data-reader-font-size-value]'),
+    lineHeightValue: document.querySelector('[data-reader-line-height-value]'),
+    paragraphGapValue: document.querySelector('[data-reader-paragraph-gap-value]'),
+    sideGapValue: document.querySelector('[data-reader-side-gap-value]'),
+  };
+
+  let settings = loadReaderSettings();
+
+  function syncControls() {
+    const font = READER_FONT_MAP[settings.fontFamily] || READER_FONT_MAP.serif;
+    if (controls.fontFamily) controls.fontFamily.value = settings.fontFamily;
+    if (controls.fontSize) controls.fontSize.value = String(settings.fontSize);
+    if (controls.lineHeight) controls.lineHeight.value = String(settings.lineHeight);
+    if (controls.paragraphGap) controls.paragraphGap.value = String(settings.paragraphGap);
+    if (controls.sideGap) controls.sideGap.value = String(settings.sideGap);
+    if (controls.fontFamilyLabel) controls.fontFamilyLabel.textContent = font.label;
+    if (controls.fontSizeValue) controls.fontSizeValue.textContent = `${settings.fontSize}px`;
+    if (controls.lineHeightValue) controls.lineHeightValue.textContent = settings.lineHeight.toFixed(2).replace(/0$/, '').replace(/\.$/, '');
+    if (controls.paragraphGapValue) controls.paragraphGapValue.textContent = `${settings.paragraphGap.toFixed(1).replace(/\.0$/, '')}em`;
+    if (controls.sideGapValue) controls.sideGapValue.textContent = `${settings.sideGap}px`;
+  }
+
+  function updateSettings(patch) {
+    settings = { ...settings, ...patch };
+    applyReaderSettings(settings);
+    saveReaderSettings(settings);
+    syncControls();
+  }
+
+  applyReaderSettings(settings);
+  syncControls();
+
+  controls.fontFamily?.addEventListener('change', (event) => {
+    updateSettings({ fontFamily: event.target.value });
+  });
+
+  controls.fontSize?.addEventListener('input', (event) => {
+    updateSettings({ fontSize: Number(event.target.value) });
+  });
+
+  controls.lineHeight?.addEventListener('input', (event) => {
+    updateSettings({ lineHeight: Number(event.target.value) });
+  });
+
+  controls.paragraphGap?.addEventListener('input', (event) => {
+    updateSettings({ paragraphGap: Number(event.target.value) });
+  });
+
+  controls.sideGap?.addEventListener('input', (event) => {
+    updateSettings({ sideGap: Number(event.target.value) });
+  });
+
+  controls.reset?.addEventListener('click', () => {
+    settings = { ...READER_DEFAULTS };
+    applyReaderSettings(settings);
+    saveReaderSettings(settings);
+    syncControls();
+  });
+}
+
 async function initBookPage() {
   const books = await loadBooks();
   const slug = getQueryParam('slug');
   const query = getQueryParam('q');
   const book = getBookBySlug(books, slug) || books[0];
   if (!book) return;
+
+  bindReaderControls();
 
   document.title = `${book.title} · 静读`;
   document.querySelector('[data-book-title]').textContent = book.title;
@@ -42,7 +165,9 @@ async function initBookPage() {
   document.querySelector('[data-book-search-input]').value = query;
 
   const tagsEl = document.querySelector('[data-book-tags]');
-  if (tagsEl) tagsEl.innerHTML = (book.tags || []).map((tag) => `<a class="tag-pill" href="./library.html?tag=${encodeURIComponent(tag)}"># ${escapeHtml(tag)}</a>`).join('');
+  if (tagsEl) {
+    tagsEl.innerHTML = (book.tags || []).map((tag) => `<a class="tag-pill" href="./library.html?tag=${encodeURIComponent(tag)}"># ${escapeHtml(tag)}</a>`).join('');
+  }
 
   const tocEl = document.querySelector('[data-book-toc]');
   if (tocEl) {
@@ -72,67 +197,79 @@ async function initBookPage() {
     }
   }
 
+  function setNavDisabled(disabled) {
+    if (prevBtn) prevBtn.disabled = disabled;
+    if (nextBtn) nextBtn.disabled = disabled;
+  }
+
   function renderSearchState() {
     const q = searchInput.value.trim();
     const results = searchWithinBook(book, q);
     renderBookContent(book, q);
-    if (resultCount) resultCount.textContent = q ? `当前书内找到 ${results.length} 条命中` : '输入关键词后，可在当前作品内检索并高亮。';
+    if (resultCount) {
+      resultCount.textContent = q
+        ? `当前书内找到 ${results.length} 条命中`
+        : '输入关键词后，可在当前作品内检索并高亮。';
+    }
     if (!q) {
-      resultWrap.innerHTML = createEmptyState('从当前作品开始检索', '搜索会在本书的章节与正文中查找关键词，并把命中片段高亮显示。');
+      setNavDisabled(true);
+      if (resultWrap) {
+        resultWrap.innerHTML = createEmptyState('从当前作品开始检索', '搜索会在本书的章节与正文中查找关键词，并把命中片段高亮显示。');
+      }
       return;
     }
     if (!results.length) {
-      resultWrap.innerHTML = createEmptyState('没有书内命中', '试试更短的关键词，或改搜章节标题中的术语。');
+      setNavDisabled(true);
+      if (resultWrap) {
+        resultWrap.innerHTML = createEmptyState('没有书内命中', '试试更短的关键词，或改搜章节标题中的术语。');
+      }
       return;
     }
     cursor = Math.min(cursor, results.length - 1);
-    resultWrap.innerHTML = results.map((item, index) => `
-      <div class="book-search-result ${index === cursor ? 'active' : ''}">
-        <button type="button" data-result-index="${index}">
-          <strong>${escapeHtml(item.chapterTitle)}</strong>
-          <div class="muted" style="margin-top:6px;">第 ${item.chapterIndex + 1} 节 · 片段 ${item.paragraphIndex + 1}</div>
-          <div class="muted" style="margin-top:8px;">${highlightText(item.snippet, q)}</div>
-        </button>
-      </div>
-    `).join('');
-    resultWrap.querySelectorAll('[data-result-index]').forEach((button) => {
-      button.addEventListener('click', () => {
-        cursor = Number(button.dataset.resultIndex);
+    if (resultWrap) {
+      resultWrap.innerHTML = results.map((item, index) => `
+        <div class="book-search-result ${index === cursor ? 'active' : ''}">
+          <button type="button" data-result-index="${index}">
+            <strong>${escapeHtml(item.chapterTitle)}</strong>
+            <div class="muted" style="margin-top:6px;">第 ${item.chapterIndex + 1} 节 · 片段 ${item.paragraphIndex + 1}</div>
+            <div class="muted" style="margin-top:8px;">${highlightText(item.snippet, q)}</div>
+          </button>
+        </div>
+      `).join('');
+      resultWrap.querySelectorAll('[data-result-index]').forEach((button) => {
+        button.addEventListener('click', () => {
+          cursor = Number(button.dataset.resultIndex);
+          focusResult(cursor, results);
+          renderSearchState();
+        });
+      });
+    }
+    setNavDisabled(results.length <= 1);
+    if (prevBtn) {
+      prevBtn.onclick = () => {
+        cursor = (cursor - 1 + results.length) % results.length;
         focusResult(cursor, results);
         renderSearchState();
-      });
-    });
-    prevBtn.disabled = results.length <= 1;
-    nextBtn.disabled = results.length <= 1;
-    prevBtn.onclick = () => {
-      cursor = (cursor - 1 + results.length) % results.length;
-      focusResult(cursor, results);
-      renderSearchState();
-    };
-    nextBtn.onclick = () => {
-      cursor = (cursor + 1) % results.length;
-      focusResult(cursor, results);
-      renderSearchState();
-    };
+      };
+    }
+    if (nextBtn) {
+      nextBtn.onclick = () => {
+        cursor = (cursor + 1) % results.length;
+        focusResult(cursor, results);
+        renderSearchState();
+      };
+    }
   }
 
   searchForm?.addEventListener('submit', (event) => {
     event.preventDefault();
     const url = new URL(window.location.href);
     const value = searchInput.value.trim();
-    if (value) url.searchParams.set('q', value); else url.searchParams.delete('q');
+    if (value) url.searchParams.set('q', value);
+    else url.searchParams.delete('q');
     window.history.replaceState({}, '', url);
     cursor = 0;
     renderSearchState();
-  });
-
-  document.querySelector('[data-font-minus]')?.addEventListener('click', () => {
-    const current = Number(document.documentElement.style.getPropertyValue('--font-size-scale') || '1');
-    document.documentElement.style.setProperty('--font-size-scale', String(Math.max(0.92, current - 0.06)));
-  });
-  document.querySelector('[data-font-plus]')?.addEventListener('click', () => {
-    const current = Number(document.documentElement.style.getPropertyValue('--font-size-scale') || '1');
-    document.documentElement.style.setProperty('--font-size-scale', String(Math.min(1.24, current + 0.06)));
   });
 
   renderSearchState();
@@ -141,7 +278,9 @@ async function initBookPage() {
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
       if (entry.isIntersecting) {
-        tocLinks.forEach((link) => link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`));
+        tocLinks.forEach((link) => {
+          link.classList.toggle('active', link.getAttribute('href') === `#${entry.target.id}`);
+        });
       }
     });
   }, { rootMargin: '-25% 0px -60% 0px' });

@@ -74,12 +74,57 @@
       </section>
       <section class="sidebar-card">
         <h3>阅读设置</h3>
-        <div class="reading-actions">
-          <button class="inline-button" type="button" data-font-minus>A-</button>
-          <button class="inline-button" type="button" data-font-plus>A+</button>
-          <button class="inline-button" type="button" data-theme-toggle><span data-theme-label>切换夜间</span></button>
+        <div class="reader-settings">
+          <div class="reader-control">
+            <label class="reader-control-head" for="reader-font-family">
+              <span>字体</span>
+              <strong data-reader-font-family-label>宋体阅读</strong>
+            </label>
+            <select class="reader-select" id="reader-font-family" data-reader-font-family>
+              <option value="serif">宋体阅读</option>
+              <option value="sans">无衬线</option>
+              <option value="kai">楷体风格</option>
+            </select>
+          </div>
+
+          <div class="reader-control">
+            <label class="reader-control-head" for="reader-font-size">
+              <span>字号</span>
+              <strong data-reader-font-size-value>18px</strong>
+            </label>
+            <input class="reader-range" id="reader-font-size" type="range" min="16" max="28" step="1" value="18" data-reader-font-size />
+          </div>
+
+          <div class="reader-control">
+            <label class="reader-control-head" for="reader-line-height">
+              <span>行间距</span>
+              <strong data-reader-line-height-value>2.0</strong>
+            </label>
+            <input class="reader-range" id="reader-line-height" type="range" min="1.6" max="2.8" step="0.05" value="2" data-reader-line-height />
+          </div>
+
+          <div class="reader-control">
+            <label class="reader-control-head" for="reader-paragraph-gap">
+              <span>段间距</span>
+              <strong data-reader-paragraph-gap-value>1.1em</strong>
+            </label>
+            <input class="reader-range" id="reader-paragraph-gap" type="range" min="0.6" max="2.4" step="0.1" value="1.1" data-reader-paragraph-gap />
+          </div>
+
+          <div class="reader-control">
+            <label class="reader-control-head" for="reader-side-gap">
+              <span>左右留白</span>
+              <strong data-reader-side-gap-value>44px</strong>
+            </label>
+            <input class="reader-range" id="reader-side-gap" type="range" min="20" max="96" step="4" value="44" data-reader-side-gap />
+          </div>
+
+          <div class="reading-actions">
+            <button class="inline-button" type="button" data-reader-reset>恢复默认</button>
+            <button class="inline-button" type="button" data-theme-toggle><span data-theme-label>切换夜间</span></button>
+          </div>
         </div>
-        <p class="section-copy" style="margin-top:12px;">支持白天 / 夜间主题切换与字号调整，适合长时间阅读。</p>
+        <p class="section-copy reading-panel-copy">支持字体、字号、段间距、行间距和左右留白设置，阅读偏好会自动保存在当前浏览器中。</p>
       </section>
     </aside>
   </div>
