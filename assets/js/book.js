@@ -1,12 +1,17 @@
 const RQ = window.ReadQuiet;
 
 const READER_SETTINGS_KEY = 'read-quiet-reader-settings';
+const SIDEBAR_SETTINGS_KEY = 'read-quiet-sidebar-settings';
 const READER_DEFAULTS = {
   fontFamily: 'serif',
   fontSize: 18,
   lineHeight: 2,
   paragraphGap: 1.1,
   sideGap: 44,
+};
+const SIDEBAR_DEFAULTS = {
+  leftCollapsed: false,
+  rightCollapsed: false,
 };
 
 const READER_FONT_MAP = {
@@ -134,6 +139,69 @@ function bindReaderControls() {
   });
 }
 
+function loadSidebarSettings() {
+  try {
+    const raw = localStorage.getItem(SIDEBAR_SETTINGS_KEY);
+    if (!raw) return { ...SIDEBAR_DEFAULTS };
+    return {
+      ...SIDEBAR_DEFAULTS,
+      ...JSON.parse(raw),
+    };
+  } catch (error) {
+    return { ...SIDEBAR_DEFAULTS };
+  }
+}
+
+function saveSidebarSettings(settings) {
+  localStorage.setItem(SIDEBAR_SETTINGS_KEY, JSON.stringify(settings));
+}
+
+function bindSidebarToggles() {
+  const layout = document.querySelector('[data-reading-layout]');
+  if (!layout) return;
+
+  const leftSidebar = layout.querySelector('[data-reading-sidebar="left"]');
+  const rightSidebar = layout.querySelector('[data-reading-sidebar="right"]');
+  const leftButton = layout.querySelector('[data-sidebar-toggle="left"]');
+  const rightButton = layout.querySelector('[data-sidebar-toggle="right"]');
+
+  let settings = loadSidebarSettings();
+
+  function setSidebarState(side, collapsed) {
+    const sidebar = side === 'left' ? leftSidebar : rightSidebar;
+    const button = side === 'left' ? leftButton : rightButton;
+    if (!sidebar || !button) return;
+
+    sidebar.classList.toggle('is-collapsed', collapsed);
+    layout.classList.toggle(`has-${side}-collapsed`, collapsed);
+    button.setAttribute('aria-expanded', String(!collapsed));
+    const label = button.querySelector('[data-sidebar-toggle-label]');
+    if (label) {
+      label.textContent = collapsed ? '展开' : '收起';
+    }
+    button.setAttribute('title', collapsed ? '展开侧栏' : '收起侧栏');
+  }
+
+  function applySidebarState() {
+    setSidebarState('left', settings.leftCollapsed);
+    setSidebarState('right', settings.rightCollapsed);
+  }
+
+  leftButton?.addEventListener('click', () => {
+    settings.leftCollapsed = !settings.leftCollapsed;
+    saveSidebarSettings(settings);
+    applySidebarState();
+  });
+
+  rightButton?.addEventListener('click', () => {
+    settings.rightCollapsed = !settings.rightCollapsed;
+    saveSidebarSettings(settings);
+    applySidebarState();
+  });
+
+  applySidebarState();
+}
+
 async function initBookPage() {
   const books = await RQ.loadBooks();
   const slug = RQ.getQueryParam('slug');
@@ -142,6 +210,7 @@ async function initBookPage() {
   if (!book) return;
 
   bindReaderControls();
+  bindSidebarToggles();
 
   document.title = `${book.title} · 静读`;
   document.querySelector('[data-book-title]').textContent = book.title;
