@@ -1,9 +1,9 @@
-const { getStats, loadBooks, renderStats } = window.ReadQuiet;
+const RQ = window.ReadQuiet;
 
 async function initAbout() {
-  const books = await loadBooks();
-  const stats = getStats(books);
-  renderStats(stats, {
+  const books = await RQ.loadBooks();
+  const stats = RQ.getStats(books);
+  RQ.renderStats(stats, {
     works: '[data-about-stat="works"]',
     words: '[data-about-stat="words"]',
     chapters: '[data-about-stat="chapters"]',
