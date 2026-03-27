@@ -1,0 +1,51 @@
+name: Build books from TXT
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'books-txt/**'
+      - 'build-from-txt.sh'
+      - 'tools_txt_to_books.py'
+      - '.github/workflows/build-books.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: build-books-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Build from TXT
+        run: bash ./build-from-txt.sh
+
+      - name: Commit generated files
+        run: |
+          if git diff --quiet -- assets/data/books.json assets/js/books-data.js; then
+            echo "No generated file changes."
+            exit 0
+          fi
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add assets/data/books.json assets/js/books-data.js
+          git commit -m "chore: build books from txt"
+          git push
