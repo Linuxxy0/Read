@@ -34,102 +34,131 @@
         </div>
       </div>
     </header>
-    
-<main class="section">
-  <div class="container reading-layout">
-    <aside class="sticky-panel sidebar-card">
-      <h3 id="toc">章节目录</h3>
-      <div class="toc" data-book-toc></div>
-    </aside>
 
-    <section class="reading-main">
-      <article class="book-hero card">
-        <div class="tag-list">
-          <span class="meta-pill" data-book-category></span>
-          <span class="meta-pill" data-book-words></span>
-          <span class="meta-pill" data-book-chapter-count></span>
-        </div>
-        <h1 data-book-title></h1>
-        <div class="page-intro" style="margin-top:12px;" data-book-author></div>
-        <p class="page-intro" data-book-summary></p>
-        <p class="section-copy" data-book-description></p>
-        <div class="tag-list" data-book-tags></div>
-      </article>
-      <section data-book-chapters></section>
-    </section>
-
-    <aside class="sticky-panel sidebar-stack">
-      <section class="sidebar-card">
-        <h3>作品内搜索</h3>
-        <form class="search-box" data-book-search-form>
-          <input type="search" placeholder="搜索当前著作中的关键词……" data-book-search-input />
-          <button class="search-submit primary-button" type="submit">检索</button>
-        </form>
-        <div class="reading-actions" style="margin-top:12px;">
-          <button class="inline-button" type="button" data-book-search-prev>上一个</button>
-          <button class="inline-button" type="button" data-book-search-next>下一个</button>
-        </div>
-        <p class="muted" style="margin-top:12px;" data-book-search-count></p>
-        <div class="book-search-results" data-book-search-results></div>
-      </section>
-      <section class="sidebar-card">
-        <h3>阅读设置</h3>
-        <div class="reader-settings">
-          <div class="reader-control">
-            <label class="reader-control-head" for="reader-font-family">
-              <span>字体</span>
-              <strong data-reader-font-family-label>宋体阅读</strong>
-            </label>
-            <select class="reader-select" id="reader-font-family" data-reader-font-family>
-              <option value="serif">宋体阅读</option>
-              <option value="sans">无衬线</option>
-              <option value="kai">楷体风格</option>
-            </select>
+    <main class="section">
+      <div class="container reading-layout" data-reading-layout>
+        <aside class="sticky-panel sidebar-card reading-sidebar reading-sidebar-left" data-reading-sidebar="left">
+          <div class="sidebar-head">
+            <h3 id="toc">章节目录</h3>
+            <button
+              class="sidebar-toggle"
+              type="button"
+              data-sidebar-toggle="left"
+              aria-expanded="true"
+              aria-controls="book-toc-panel"
+            >
+              <span data-sidebar-toggle-label>收起</span>
+            </button>
           </div>
+          <div class="sidebar-scroll toc" id="book-toc-panel" data-sidebar-body="left" data-book-toc></div>
+        </aside>
 
-          <div class="reader-control">
-            <label class="reader-control-head" for="reader-font-size">
-              <span>字号</span>
-              <strong data-reader-font-size-value>18px</strong>
-            </label>
-            <input class="reader-range" id="reader-font-size" type="range" min="16" max="28" step="1" value="18" data-reader-font-size />
+        <section class="reading-main">
+          <article class="book-hero card">
+            <div class="tag-list">
+              <span class="meta-pill" data-book-category></span>
+              <span class="meta-pill" data-book-words></span>
+              <span class="meta-pill" data-book-chapter-count></span>
+            </div>
+            <h1 data-book-title></h1>
+            <div class="page-intro" style="margin-top:12px;" data-book-author></div>
+            <p class="page-intro" data-book-summary></p>
+            <p class="section-copy" data-book-description></p>
+            <div class="tag-list" data-book-tags></div>
+          </article>
+          <section data-book-chapters></section>
+        </section>
+
+        <aside class="sticky-panel sidebar-stack reading-sidebar reading-sidebar-right" data-reading-sidebar="right">
+          <section class="sidebar-card sidebar-toolbar-card">
+            <div class="sidebar-head">
+              <h3>阅读工具</h3>
+              <button
+                class="sidebar-toggle"
+                type="button"
+                data-sidebar-toggle="right"
+                aria-expanded="true"
+                aria-controls="reading-tools-panel"
+              >
+                <span data-sidebar-toggle-label>收起</span>
+              </button>
+            </div>
+            <p class="muted sidebar-toolbar-copy">支持折叠、书内检索与阅读设置，侧栏状态会记住。</p>
+          </section>
+
+          <div class="reading-sidebar-body" id="reading-tools-panel" data-sidebar-body="right">
+            <section class="sidebar-card">
+              <h3>作品内搜索</h3>
+              <form class="search-box" data-book-search-form>
+                <input type="search" placeholder="搜索当前著作中的关键词……" data-book-search-input />
+                <button class="search-submit primary-button" type="submit">检索</button>
+              </form>
+              <div class="reading-actions" style="margin-top:12px;">
+                <button class="inline-button" type="button" data-book-search-prev>上一个</button>
+                <button class="inline-button" type="button" data-book-search-next>下一个</button>
+              </div>
+              <p class="muted" style="margin-top:12px;" data-book-search-count></p>
+              <div class="book-search-results" data-book-search-results></div>
+            </section>
+
+            <section class="sidebar-card">
+              <h3>阅读设置</h3>
+              <div class="reader-settings">
+                <div class="reader-control">
+                  <label class="reader-control-head" for="reader-font-family">
+                    <span>字体</span>
+                    <strong data-reader-font-family-label>宋体阅读</strong>
+                  </label>
+                  <select class="reader-select" id="reader-font-family" data-reader-font-family>
+                    <option value="serif">宋体阅读</option>
+                    <option value="sans">无衬线</option>
+                    <option value="kai">楷体风格</option>
+                  </select>
+                </div>
+
+                <div class="reader-control">
+                  <label class="reader-control-head" for="reader-font-size">
+                    <span>字号</span>
+                    <strong data-reader-font-size-value>18px</strong>
+                  </label>
+                  <input class="reader-range" id="reader-font-size" type="range" min="16" max="28" step="1" value="18" data-reader-font-size />
+                </div>
+
+                <div class="reader-control">
+                  <label class="reader-control-head" for="reader-line-height">
+                    <span>行间距</span>
+                    <strong data-reader-line-height-value>2.0</strong>
+                  </label>
+                  <input class="reader-range" id="reader-line-height" type="range" min="1.6" max="2.8" step="0.05" value="2" data-reader-line-height />
+                </div>
+
+                <div class="reader-control">
+                  <label class="reader-control-head" for="reader-paragraph-gap">
+                    <span>段间距</span>
+                    <strong data-reader-paragraph-gap-value>1.1em</strong>
+                  </label>
+                  <input class="reader-range" id="reader-paragraph-gap" type="range" min="0.6" max="2.4" step="0.1" value="1.1" data-reader-paragraph-gap />
+                </div>
+
+                <div class="reader-control">
+                  <label class="reader-control-head" for="reader-side-gap">
+                    <span>左右留白</span>
+                    <strong data-reader-side-gap-value>44px</strong>
+                  </label>
+                  <input class="reader-range" id="reader-side-gap" type="range" min="20" max="96" step="4" value="44" data-reader-side-gap />
+                </div>
+
+                <div class="reading-actions">
+                  <button class="inline-button" type="button" data-reader-reset>恢复默认</button>
+                  <button class="inline-button" type="button" data-theme-toggle><span data-theme-label>切换夜间</span></button>
+                </div>
+              </div>
+              <p class="section-copy reading-panel-copy">支持字体、字号、段间距、行间距和左右留白设置，阅读偏好会自动保存在当前浏览器中。</p>
+            </section>
           </div>
-
-          <div class="reader-control">
-            <label class="reader-control-head" for="reader-line-height">
-              <span>行间距</span>
-              <strong data-reader-line-height-value>2.0</strong>
-            </label>
-            <input class="reader-range" id="reader-line-height" type="range" min="1.6" max="2.8" step="0.05" value="2" data-reader-line-height />
-          </div>
-
-          <div class="reader-control">
-            <label class="reader-control-head" for="reader-paragraph-gap">
-              <span>段间距</span>
-              <strong data-reader-paragraph-gap-value>1.1em</strong>
-            </label>
-            <input class="reader-range" id="reader-paragraph-gap" type="range" min="0.6" max="2.4" step="0.1" value="1.1" data-reader-paragraph-gap />
-          </div>
-
-          <div class="reader-control">
-            <label class="reader-control-head" for="reader-side-gap">
-              <span>左右留白</span>
-              <strong data-reader-side-gap-value>44px</strong>
-            </label>
-            <input class="reader-range" id="reader-side-gap" type="range" min="20" max="96" step="4" value="44" data-reader-side-gap />
-          </div>
-
-          <div class="reading-actions">
-            <button class="inline-button" type="button" data-reader-reset>恢复默认</button>
-            <button class="inline-button" type="button" data-theme-toggle><span data-theme-label>切换夜间</span></button>
-          </div>
-        </div>
-        <p class="section-copy reading-panel-copy">支持字体、字号、段间距、行间距和左右留白设置，阅读偏好会自动保存在当前浏览器中。</p>
-      </section>
-    </aside>
-  </div>
-</main>
-
+        </aside>
+      </div>
+    </main>
   </div>
   <script src="./assets/js/books-data.js"></script>
   <script src="./assets/js/site.js"></script>
